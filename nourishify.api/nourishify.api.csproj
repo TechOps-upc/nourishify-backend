@@ -12,7 +12,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Shared\Infrastructure\" />
+      <Folder Include="Shared\Infrastructure\Persistence\" />
     </ItemGroup>
 
 </Project>
