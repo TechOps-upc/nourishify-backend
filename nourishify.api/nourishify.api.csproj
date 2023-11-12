@@ -12,7 +12,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Shared\" />
+      <Folder Include="Shared\Domain\" />
     </ItemGroup>
 
 </Project>
