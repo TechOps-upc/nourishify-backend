@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 using nourishify.api.IAM.Domain.Model.ValueObjects;
 
@@ -23,9 +24,15 @@ public class User
     
     public long Id { get; set; }
     public PersonName Name { get; private set; }
+    [EmailAddress]
     public EmailAddress Email { get; private set; }
     [JsonIgnore] public string PasswordHash { get; private set; }
     public string Username { get; private set; }
+    
+    // Expose properties
+    public string FirstName => Name.FirstName;
+    public string LastName => Name.LastName;
+    public string EmailAddress => Email.Address;
     
     /**
      * <summary>
