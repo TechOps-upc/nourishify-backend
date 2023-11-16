@@ -23,5 +23,6 @@
     <ItemGroup>
       <Folder Include="IAM\Application\Internal\CommandServices\" />
       <Folder Include="IAM\Application\Internal\QueryServices\" />
+      <Folder Include="IAM\Infrastructure\Tokens\JWT\Services\" />
     </ItemGroup>
 </Project>
