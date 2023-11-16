@@ -1,10 +1,14 @@
 using Microsoft.AspNetCore.Mvc;
 using nourishify.api.IAM.Domain.Model.Queries;
 using nourishify.api.IAM.Domain.Services;
+using nourishify.api.IAM.Infrastructure.Pipeline.Middleware.Attributes;
 using nourishify.api.IAM.Interfaces.REST.Transform;
 
 namespace nourishify.api.IAM.Interfaces;
 
+[Authorize]
+[ApiController]
+[Route("api/v1/[controller]")]
 public class UsersController : ControllerBase
 {
     private readonly IUserQueryService _userQueryService;
@@ -15,7 +19,7 @@ public class UsersController : ControllerBase
     }
     
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetUserById(int id)
+    public async Task<IActionResult> GetUserById(long id)
     {
         var getUserByIdQuery = new GetUserByIdQuery(id);
         var user = await _userQueryService.Handle(getUserByIdQuery);
