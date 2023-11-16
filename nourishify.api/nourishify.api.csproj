@@ -19,4 +19,12 @@
         <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="6.5.0" />
         <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="7.0.3" />
     </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="IAM\Application\" />
+      <Folder Include="IAM\Domain\Model\Commands\" />
+      <Folder Include="IAM\Domain\Model\Queries\" />
+      <Folder Include="IAM\Domain\Repositories\" />
+      <Folder Include="IAM\Domain\Services\" />
+    </ItemGroup>
 </Project>
