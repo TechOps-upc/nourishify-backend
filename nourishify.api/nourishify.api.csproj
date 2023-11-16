@@ -25,7 +25,6 @@
       <Folder Include="IAM\Application\Internal\QueryServices\" />
       <Folder Include="IAM\Domain\Model\Commands\" />
       <Folder Include="IAM\Domain\Model\Queries\" />
-      <Folder Include="IAM\Domain\Repositories\" />
       <Folder Include="IAM\Domain\Services\" />
     </ItemGroup>
 </Project>
