@@ -21,6 +21,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="IAM\INterfaces\" />
+      <Folder Include="IAM\Interfaces\" />
     </ItemGroup>
 </Project>
