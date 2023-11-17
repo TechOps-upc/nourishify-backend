@@ -3,7 +3,7 @@ using BCryptNet = BCrypt.Net.BCrypt;
 
 namespace nourishify.api.IAM.Infrastructure.Hashing.BCrypt.Services;
 
-public class HasingService : IHashingService
+public class HashingService : IHashingService
 {
     /**
      * Hashes a password.
