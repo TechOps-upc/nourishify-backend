@@ -4,11 +4,11 @@ using nourishify.api.IAM.Domain.Services;
 using nourishify.api.IAM.Infrastructure.Pipeline.Middleware.Attributes;
 using nourishify.api.IAM.Interfaces.REST.Transform;
 
-namespace nourishify.api.IAM.Interfaces;
+namespace nourishify.api.IAM.Interfaces.REST;
 
 [Authorize]
 [ApiController]
-[Route("api/v1/[controller]")]
+[Route("api/v1/[controller]")]  
 public class UsersController : ControllerBase
 {
     private readonly IUserQueryService _userQueryService;
