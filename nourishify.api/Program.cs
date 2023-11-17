@@ -6,6 +6,8 @@ using nourishify.api.IAM.Domain.Services;
 using nourishify.api.IAM.Infrastructure.Hashing.BCrypt.Services;
 using nourishify.api.IAM.Infrastructure.Persitence.Repositories;
 using nourishify.api.IAM.Infrastructure.Tokens.JWT.Services;
+using nourishify.api.Shared.Domain.Repositories;
+using nourishify.api.Shared.Infrastructure.Persistence.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +20,11 @@ builder.Services.AddSwaggerGen();
 
 // Configure Lowercase URLs
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
+
+// Configure Dependency Injection
+
+// Shared Bounded Context Injection Configuration
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 // IAM Bounded Context Injection Configuration
 builder.Services.AddScoped<IUserRepository, UserRepository>();
