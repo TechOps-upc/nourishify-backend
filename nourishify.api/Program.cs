@@ -5,6 +5,7 @@ using nourishify.api.IAM.Domain.Repositories;
 using nourishify.api.IAM.Domain.Services;
 using nourishify.api.IAM.Infrastructure.Hashing.BCrypt.Services;
 using nourishify.api.IAM.Infrastructure.Persitence.Repositories;
+using nourishify.api.IAM.Infrastructure.Tokens.JWT.Configuration;
 using nourishify.api.IAM.Infrastructure.Tokens.JWT.Services;
 using nourishify.api.Shared.Domain.Repositories;
 using nourishify.api.Shared.Infrastructure.Persistence.Repositories;
@@ -33,6 +34,8 @@ builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IUserCommandService, UserCommandService>();
 builder.Services.AddScoped<IUserQueryService, UserQueryService>();
 
+// TokenSettings Configuration
+builder.Services.Configure<TokenSettings>(builder.Configuration.GetSection("TokenSettings"));
 
 var app = builder.Build();
 
