@@ -1,5 +1,6 @@
 using EntityFrameworkCore.CreatedUpdatedDate.Extensions;
 using Microsoft.EntityFrameworkCore;
+using nourishify.api.IAM.Domain.Model.Aggregates;
 using nourishify.api.Shared.Infrastructure.Persistence.Configuration.Extensions;
 
 namespace nourishify.api.Shared.Infrastructure.Persistence.Configuration;
@@ -30,6 +31,14 @@ public class AppDbContext : DbContext
     {
         base.OnModelCreating(builder);
         
+        // IAM Context
+        builder.Entity<User>().ToTable("Users");
+        builder.Entity<User>().HasKey(u => u.Id);
+        builder.Entity<User>().Property(u => u.Id).IsRequired().ValueGeneratedOnAdd();
+        builder.Entity<User>().Property(u => u.Name).IsRequired().HasMaxLength(50);
+        builder.Entity<User>().Property(u => u.Email).IsRequired().HasMaxLength(50);
+        builder.Entity<User>().Property(u => u.PasswordHash).IsRequired().HasMaxLength(100);
+        builder.Entity<User>().Property(u => u.Username).IsRequired().HasMaxLength(50);
        
         // Apply snake case naming convention
         builder.UseSnakeCaseNamingConvention();
