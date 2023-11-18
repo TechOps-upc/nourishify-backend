@@ -74,7 +74,7 @@ public class UserCommandService : IUserCommandService
      * <param name="command">The SignInCommand to be handled, including username and password.</param>
      * <returns>A tuple containing the User and the generated token if successful, otherwise throws and exception.</returns>
      */
-    public async Task<(User user, string token)> Handle(SignInCommand command)
+    public async Task<(User user, string token)> Handle(LogInCommand command)
     {
         var user = await _userRepository.FindByEmailAsync(command.Email);
 

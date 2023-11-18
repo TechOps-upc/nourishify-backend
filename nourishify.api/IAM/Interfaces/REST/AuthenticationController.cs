@@ -43,14 +43,14 @@ public class AuthenticationController : ControllerBase
      * <summary>
      *     This endpoint is responsible for authenticating a user.
      * </summary>
-     * <param name="signInResource">The sign in resource containing the username and password.</param>
+     * <param name="logInResource">The sign in resource containing the username and password.</param>
      * <returns>The authenticated user including a JWT token.</returns>
     */
     [AllowAnonymous]
-    [HttpPost("sign-in")]
-    public async Task<IActionResult> SignIn([FromBody] SignInResource signInResource)
+    [HttpPost("log-in")]
+    public async Task<IActionResult> LogIn([FromBody] LogInResource logInResource)
     {
-        var signInCommand = SignInCommandFromResourceAssembler.ToCommandFromResource(signInResource);
+        var signInCommand = LogInCommandFromResourceAssembler.ToCommandFromResource(logInResource);
         var authenticatedUser = await _userCommandService.Handle(signInCommand);
         var resource =
             AuthenticatedUserResourceFromEntityAssembler.ToResourceFromEntity(authenticatedUser.user,

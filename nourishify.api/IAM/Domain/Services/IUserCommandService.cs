@@ -26,5 +26,5 @@ public interface IUserCommandService
   * @param command The SignInCommand that is sent to the UserCommandService.
   * @return A Task that represents the asynchronous operation.
   */
- Task<(User user, string token)> Handle(SignInCommand command);
+ Task<(User user, string token)> Handle(LogInCommand command);
 }
