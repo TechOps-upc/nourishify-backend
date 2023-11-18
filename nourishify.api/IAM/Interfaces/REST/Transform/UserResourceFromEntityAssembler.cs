@@ -11,7 +11,7 @@ public static class UserResourceFromEntityAssembler
             user.Id,
             user.FirstName,
             user.LastName,
-            user.EmailAddress,
+            user.Email,
             user.Username);
     }
 }

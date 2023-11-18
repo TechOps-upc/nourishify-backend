@@ -9,7 +9,7 @@ public class User
     public User(string firstName, string lastName, string email, string passwordHash, string username)
     {
         Name = new PersonName(firstName, lastName);
-        Email = new EmailAddress(email);
+        Email = email;
         PasswordHash = passwordHash;
         Username = username;
     }
@@ -17,7 +17,7 @@ public class User
     public User()
     {
         Name = new PersonName();
-        Email = new EmailAddress();
+        Email = string.Empty;
         PasswordHash = string.Empty;
         Username = string.Empty;
     }
@@ -25,14 +25,13 @@ public class User
     public long Id { get; set; }
     public PersonName Name { get; private set; }
     [EmailAddress]
-    public EmailAddress Email { get; private set; }
+    public string Email { get; private set; }
     [JsonIgnore] public string PasswordHash { get; private set; }
     public string Username { get; private set; }
     
     // Expose properties
     public string FirstName => Name.FirstName;
     public string LastName => Name.LastName;
-    public string EmailAddress => Email.Address;
     
     /**
      * <summary>
@@ -83,7 +82,7 @@ public class User
      */
     public User UpdateEmail(string email)
     {
-        Email = new EmailAddress(email);
+        Email = email;
         return this;
     }
 }

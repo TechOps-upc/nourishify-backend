@@ -35,7 +35,13 @@ public class AppDbContext : DbContext
         builder.Entity<User>().ToTable("Users");
         builder.Entity<User>().HasKey(u => u.Id);
         builder.Entity<User>().Property(u => u.Id).IsRequired().ValueGeneratedOnAdd();
-        builder.Entity<User>().Property(u => u.Name).IsRequired().HasMaxLength(50);
+        builder.Entity<User>().OwnsOne(u => u.Name,
+        n =>
+        {
+            n.WithOwner().HasForeignKey("Id");
+            n.Property(p => p.FirstName).HasColumnName("FirstName").HasMaxLength(50);
+            n.Property(p => p.LastName).HasColumnName("LastName").HasMaxLength(50);
+        });
         builder.Entity<User>().Property(u => u.Email).IsRequired().HasMaxLength(50);
         builder.Entity<User>().Property(u => u.PasswordHash).IsRequired().HasMaxLength(100);
         builder.Entity<User>().Property(u => u.Username).IsRequired().HasMaxLength(50);

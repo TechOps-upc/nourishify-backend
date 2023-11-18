@@ -7,6 +7,7 @@ using nourishify.api.IAM.Domain.Repositories;
 using nourishify.api.IAM.Domain.Services;
 using nourishify.api.IAM.Infrastructure.Hashing.BCrypt.Services;
 using nourishify.api.IAM.Infrastructure.Persitence.Repositories;
+using nourishify.api.IAM.Infrastructure.Pipeline.Middleware.Extensions;
 using nourishify.api.IAM.Infrastructure.Tokens.JWT.Configuration;
 using nourishify.api.IAM.Infrastructure.Tokens.JWT.Services;
 using nourishify.api.Shared.Domain.Repositories;
@@ -135,6 +136,8 @@ if (app.Environment.IsDevelopment())
 app.UseCors("AllowAllPolicy");
 
 // Add RequestAuthorization Middleware to ASP.NET Core Pipeline
+
+app.UseRequestAuthorization();
 
 app.UseHttpsRedirection();
 
