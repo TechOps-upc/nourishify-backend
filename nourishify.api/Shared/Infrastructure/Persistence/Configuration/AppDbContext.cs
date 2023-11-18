@@ -43,8 +43,9 @@ public class AppDbContext : DbContext
             n.Property(p => p.LastName).HasColumnName("LastName").HasMaxLength(50);
         });
         builder.Entity<User>().Property(u => u.Email).IsRequired().HasMaxLength(50);
-        builder.Entity<User>().Property(u => u.PasswordHash).IsRequired().HasMaxLength(100);
         builder.Entity<User>().Property(u => u.Username).IsRequired().HasMaxLength(50);
+        builder.Entity<User>().Property(u => u.PasswordHash).IsRequired().HasMaxLength(100);
+        
        
         // Apply snake case naming convention
         builder.UseSnakeCaseNamingConvention();
