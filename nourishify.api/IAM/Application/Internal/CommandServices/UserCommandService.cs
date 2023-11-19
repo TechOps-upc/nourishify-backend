@@ -4,6 +4,7 @@ using nourishify.api.IAM.Domain.Model.Commands;
 using nourishify.api.IAM.Domain.Repositories;
 using nourishify.api.IAM.Domain.Services;
 using nourishify.api.Shared.Domain.Repositories;
+using nourishify.api.Shared.Exeptions;
 
 namespace nourishify.api.IAM.Application.Internal.CommandServices;
 
@@ -101,15 +102,15 @@ public class UserCommandService : IUserCommandService
     {
         var user = await _userRepository.FindByIdAsync(command.Id);
         if (user == null)
-            throw new Exception($"User with Id {command.Id} not found");
+            throw new NotFoundException();
         try
         {
             _userRepository.Remove(user);
             await _unitOfWork.CompleteAsync();
         }
-        catch (Exception e)
+        catch (Exception ex)
         {
-            throw new Exception($"Error while creating user: {e.Message}");
+            throw new Exception(ex.Message);
         }
     }
 }
