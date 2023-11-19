@@ -23,7 +23,7 @@ public class UsersController : ControllerBase
         _userCommandService = userCommandService;
     }
     
-    [HttpGet("{id}")]
+    [HttpGet("{id}", Name = "GetUserById")]
     public async Task<IActionResult> GetUserById(long id)
     {
         var getUserByIdQuery = new GetUserByIdQuery(id);

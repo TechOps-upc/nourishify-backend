@@ -4,7 +4,7 @@ using nourishify.api.IAM.Domain.Model.ValueObjects;
 
 namespace nourishify.api.IAM.Domain.Model.Aggregates;
 
-public class User
+public partial class User
 {
     public User(string firstName, string lastName, string email, string passwordHash, string username)
     {

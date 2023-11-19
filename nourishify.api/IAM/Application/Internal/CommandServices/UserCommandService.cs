@@ -42,7 +42,7 @@ public class UserCommandService : IUserCommandService
      * <param name="command">The SignUpCommand to be handled, including username and password.</param>
      * <returns>A Task if successful, otherwise throws and exception.</returns>
      */
-    public async Task Handle(SignUpCommand command)
+    public async Task<User> Handle(SignUpCommand command)
     {
         if (_userRepository.ExistsByEmail(command.Email))
             throw new Exception($"Email {command.Email} is already taken");
@@ -58,6 +58,7 @@ public class UserCommandService : IUserCommandService
         {
             await _userRepository.AddAsync(user);
             await _unitOfWork.CompleteAsync();
+            return user;
         }
         catch (Exception e)
         {
