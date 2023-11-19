@@ -56,7 +56,7 @@ public class UsersController : ControllerBase
         }
         catch (Exception ex)
         {
-            return StatusCode(500, $"An error occurred while deleting user with ID {id}: {ex.Message}");
+            return StatusCode(500, $"An error occurred while deleting user with ID {id}\n: {ex.Message}");
         }
     }
 }
