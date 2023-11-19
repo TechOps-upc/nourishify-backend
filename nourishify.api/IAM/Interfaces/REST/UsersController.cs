@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using nourishify.api.IAM.Domain.Model.Commands;
 using nourishify.api.IAM.Domain.Model.Queries;
 using nourishify.api.IAM.Domain.Services;
 using nourishify.api.IAM.Infrastructure.Pipeline.Middleware.Attributes;
@@ -12,10 +13,12 @@ namespace nourishify.api.IAM.Interfaces.REST;
 public class UsersController : ControllerBase
 {
     private readonly IUserQueryService _userQueryService;
+    private readonly IUserCommandService _userCommandService;
     
-    public UsersController(IUserQueryService userQueryService)
+    public UsersController(IUserQueryService userQueryService, IUserCommandService userCommandService)
     {
         _userQueryService = userQueryService;
+        _userCommandService = userCommandService;
     }
     
     [HttpGet("{id}")]
@@ -35,5 +38,13 @@ public class UsersController : ControllerBase
         var userResources = users
             .Select(UserResourceFromEntityAssembler.ToResourceFromEntity);
         return Ok(userResources);
+    }
+    
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteUserById(long id)
+    {
+        var deleteUserCommand = new DeleteUserCommand(id);
+        await _userCommandService.Handle(deleteUserCommand);
+        NotFoundEx
     }
 }

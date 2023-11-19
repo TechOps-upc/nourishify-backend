@@ -27,4 +27,6 @@ public interface IUserCommandService
   * @return A Task that represents the asynchronous operation.
   */
  Task<(User user, string token)> Handle(LogInCommand command);
+ 
+ Task Handle(DeleteUserCommand command);
 }

@@ -65,7 +65,7 @@ public class UserCommandService : IUserCommandService
     }
     
     /**
-     * Handle the SignInCommand.
+     * Handle the LogInCommand.
      * <summary>
      *     <para>
      *         This method is responsible for handling the SignInCommand.
@@ -84,5 +84,32 @@ public class UserCommandService : IUserCommandService
         var token = _tokenService.GenerateToken(user);
 
         return (user, token);
+    }
+    
+    
+    /**
+     * Handle the DeleteUserCommand.
+     * <summary>
+     *    <para>
+     *       This method is responsible for handling the DeleteUserCommand.
+     *   </para>
+     * </summary>
+     * <param name="command">The DeleteUserCommand to be handled, including the Id of the user to be deleted.</param>
+     * <returns>A Task if successful, otherwise throws and exception.</returns>
+     */
+    public async Task Handle(DeleteUserCommand command)
+    {
+        var user = await _userRepository.FindByIdAsync(command.Id);
+        if (user == null)
+            throw new Exception($"User with Id {command.Id} not found");
+        try
+        {
+            _userRepository.Remove(user);
+            await _unitOfWork.CompleteAsync();
+        }
+        catch (Exception e)
+        {
+            throw new Exception($"Error while creating user: {e.Message}");
+        }
     }
 }
