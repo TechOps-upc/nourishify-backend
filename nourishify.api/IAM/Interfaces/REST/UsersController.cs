@@ -77,6 +77,8 @@ public class UsersController : ControllerBase
                 return NotFound($"User with ID {id} not found");
             }
 
+            user.UpdatedDate = DateTimeOffset.Now;
+            
             var userResource = UserResourceFromEntityAssembler.ToResourceFromEntity(user);
             return Ok(userResource);
         }
