@@ -113,4 +113,33 @@ public class UserCommandService : IUserCommandService
             throw new Exception(ex.Message);
         }
     }
+
+    /**
+     * Handle the UpdateUserCommand.
+     * <summary>
+     *    <para>
+     *       This method is responsible for handling the UpdateUserCommand.
+     *   </para>
+     * </summary>
+     * <param name="command">The UpdateUserCommand to be handled, including the Id of the user to be updated.</param>
+     * <returns>A Task if successful, otherwise throws and exception.</returns>
+     */
+    public async Task Handle(UpdateUserCommand command)
+    {
+        var user = await _userRepository.FindByIdAsync(command.Id);
+        if (user == null)
+            throw new NotFoundException();
+        try
+        {
+            user.UpdateName(command.FirstName, command.LastName);
+            user.UpdateEmail(command.Email);
+            user.UpdateUsername(command.Username);
+            _userRepository.Update(user);
+            await _unitOfWork.CompleteAsync();
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(ex.Message);
+        }
+    }
 }
