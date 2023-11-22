@@ -47,7 +47,4 @@ public partial class User
     
     //Relationship
     public Role Role { get; set; }
-    
-
-    public bool IsNutritionist { get; set; }
 }

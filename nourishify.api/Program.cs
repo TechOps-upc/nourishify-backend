@@ -13,6 +13,11 @@ using nourishify.api.IAM.Infrastructure.Tokens.JWT.Services;
 using nourishify.api.Shared.Domain.Repositories;
 using nourishify.api.Shared.Infrastructure.Persistence.Configuration;
 using nourishify.api.Shared.Infrastructure.Persistence.Repositories;
+using nourishify.api.SubscriptionPlans.Application.Internal.CommandServices;
+using nourishify.api.SubscriptionPlans.Application.Internal.QueryServices;
+using nourishify.api.SubscriptionPlans.Domain.Repository;
+using nourishify.api.SubscriptionPlans.Domain.Services;
+using nourishify.api.SubscriptionPlans.Infrastructure.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -105,6 +110,11 @@ builder.Services.AddScoped<IUserQueryService, UserQueryService>();
 builder.Services.AddScoped<IRoleRepository, RoleRepository>();
 builder.Services.AddScoped<IRoleCommandService, RoleCommandService>();
 builder.Services.AddScoped<IRoleQueryService, RoleQueryService>();
+
+// SubscriptionPlans Bounded Context Injection Configuration
+builder.Services.AddScoped<IPlanRepository, PlanRepository>();
+builder.Services.AddScoped<IPlanCommandService, PlanCommandService>();
+builder.Services.AddScoped<IPlanQueryService, PlanQueryService>();
 
 
 // TokenSettings Configuration
