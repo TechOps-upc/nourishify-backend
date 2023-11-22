@@ -22,7 +22,5 @@
 
     <ItemGroup>
       <Folder Include="SubscriptionPlans\Domain\Model\ValueObjects\" />
-      <Folder Include="SubscriptionPlans\Interfaces\REST\Resources\" />
-      <Folder Include="SubscriptionPlans\Interfaces\REST\Transform\" />
     </ItemGroup>
 </Project>
