@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using nourishify.api.IAM.Domain.Model.Aggregates;
 using nourishify.api.Shared.Converters;
 using nourishify.api.Shared.Infrastructure.Persistence.Configuration.Extensions;
+using nourishify.api.SubscriptionPlans.Domain.Model.Aggregates;
 
 namespace nourishify.api.Shared.Infrastructure.Persistence.Configuration;
 
@@ -74,6 +75,18 @@ public class AppDbContext : DbContext
             .HasMany(r => r.Users)
             .WithOne(u => u.Role)
             .HasForeignKey(u => u.RoleId);
+        
+        
+        // Subscription Plans Context
+        // Plans
+        builder.Entity<Plan>().ToTable("Plans");
+        builder.Entity<Plan>().HasKey(p => p.Id);
+        builder.Entity<Plan>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
+        builder.Entity<Plan>().Property(p => p.Name).IsRequired().HasMaxLength(50);
+        builder.Entity<Plan>().Property(p => p.Price).IsRequired();
+        builder.Entity<Plan>()
+            .Property(p => p.Perks)
+            .HasConversion(new StringListConverter());
         
         // Apply snake case naming convention
         builder.UseSnakeCaseNamingConvention();
