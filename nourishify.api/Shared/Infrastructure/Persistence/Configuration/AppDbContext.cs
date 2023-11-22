@@ -32,6 +32,7 @@ public class AppDbContext : DbContext
         base.OnModelCreating(builder);
         
         // IAM Context
+        // Users
         builder.Entity<User>().ToTable("Users");
         builder.Entity<User>().HasKey(u => u.Id);
         builder.Entity<User>().Property(u => u.Id).IsRequired().ValueGeneratedOnAdd();
@@ -44,9 +45,26 @@ public class AppDbContext : DbContext
         });
         builder.Entity<User>().Property(u => u.Email).IsRequired().HasMaxLength(50);
         builder.Entity<User>().Property(u => u.Username).IsRequired().HasMaxLength(50);
+        builder.Entity<User>().Property(u => u.Phone).IsRequired().HasMaxLength(20);
+        builder.Entity<User>().Property(u => u.Address).IsRequired().HasMaxLength(100);
+        builder.Entity<User>().Property(u => u.PhotoUrl).HasMaxLength(100);
+        builder.Entity<User>().Property(u => u.RoleId).IsRequired();
         builder.Entity<User>().Property(u => u.PasswordHash).IsRequired().HasMaxLength(100);
+        //Roles
+        builder.Entity<Role>().ToTable("Roles");
+        builder.Entity<Role>().HasKey(r => r.RoleId);
+        builder.Entity<Role>().Property(r => r.RoleId).IsRequired().ValueGeneratedOnAdd();
+        // Define the relationship between User and Role
+        builder.Entity<User>()
+            .HasOne(u => u.Role)
+            .WithMany(r => r.Users)
+            .HasForeignKey(u => u.RoleId);
+        // Navigation property in the Role entity to access the list of users with this role
+        builder.Entity<Role>()
+            .HasMany(r => r.Users)
+            .WithOne(u => u.Role)
+            .HasForeignKey(u => u.RoleId);
         
-       
         // Apply snake case naming convention
         builder.UseSnakeCaseNamingConvention();
     }

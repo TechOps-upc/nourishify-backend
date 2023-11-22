@@ -1,6 +1,7 @@
 namespace nourishify.api.IAM.Domain.Model.Commands;
 
-public record SignUpCommand(
+public record UpdateUserCommand(
+    long Id,
     string FirstName,
     string LastName,
     string Email,
@@ -8,6 +9,5 @@ public record SignUpCommand(
     string Phone,
     string Address,
     string PhotoUrl,
-    long RoleId,
-    string Password
+    long RoleId
     );

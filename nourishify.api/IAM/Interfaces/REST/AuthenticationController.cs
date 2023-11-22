@@ -14,10 +14,12 @@ namespace nourishify.api.IAM.Interfaces.REST;
 [Produces(MediaTypeNames.Application.Json)]
 public class AuthenticationController : ControllerBase
 {
+    private readonly IUserQueryService _userQueryService;
     private readonly IUserCommandService _userCommandService;
     
-    public AuthenticationController(IUserCommandService userCommandService)
+    public AuthenticationController(IUserQueryService userQueryService, IUserCommandService userCommandService)
     {
+        _userQueryService = userQueryService;
         _userCommandService = userCommandService;
     }
     
@@ -34,7 +36,8 @@ public class AuthenticationController : ControllerBase
     public async Task<IActionResult> SignUp([FromBody] SignUpResource signUpResource)
     {
         var signUpCommand = SignUpCommandFromResourceAssembler.ToCommandFromResource(signUpResource);
-        await _userCommandService.Handle(signUpCommand);
+        var createdUser = await _userCommandService.Handle(signUpCommand);
+        CreatedAtAction("GetUserById", "Users", new { id = createdUser.Id }, createdUser);
         return Ok("User created successfully");
     }
     

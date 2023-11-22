@@ -3,6 +3,7 @@ using nourishify.api.IAM.Domain.Model.Commands;
 using nourishify.api.IAM.Domain.Model.Queries;
 using nourishify.api.IAM.Domain.Services;
 using nourishify.api.IAM.Infrastructure.Pipeline.Middleware.Attributes;
+using nourishify.api.IAM.Interfaces.REST.Resources;
 using nourishify.api.IAM.Interfaces.REST.Transform;
 using nourishify.api.Shared.Exeptions;
 
@@ -22,7 +23,7 @@ public class UsersController : ControllerBase
         _userCommandService = userCommandService;
     }
     
-    [HttpGet("{id}")]
+    [HttpGet("{id}", Name = "GetUserById")]
     public async Task<IActionResult> GetUserById(long id)
     {
         var getUserByIdQuery = new GetUserByIdQuery(id);
@@ -56,7 +57,38 @@ public class UsersController : ControllerBase
         }
         catch (Exception ex)
         {
-            return StatusCode(500, $"An error occurred while deleting user with ID {id}: {ex.Message}");
+            return StatusCode(500, $"An error occurred while deleting user with ID {id}\n: {ex.Message}");
+        }
+    }
+    
+    [HttpPut("{id}")]
+    public async Task<IActionResult> UpdateUserById(long id, [FromBody] UpdateUserResource resource)
+    {
+        try
+        {
+            var updateUserCommand = UpdateUserCommandFromResourceAssembler.ToCommandFromResource(id, resource);
+            await _userCommandService.Handle(updateUserCommand);
+            
+            var getUserByIdQuery = new GetUserByIdQuery(id);
+            var user = await _userQueryService.Handle(getUserByIdQuery);
+
+            if (user == null)
+            {
+                return NotFound($"User with ID {id} not found");
+            }
+
+            user.UpdatedDate = DateTimeOffset.UtcNow;
+            
+            var userResource = UserResourceFromEntityAssembler.ToResourceFromEntity(user);
+            return Ok(userResource);
+        }
+        catch (NotFoundException)
+        {
+            return NotFound($"User with ID {id} not found");
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"An error occurred while updating user with ID {id}\n: {ex.Message}");
         }
     }
 }

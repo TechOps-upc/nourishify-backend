@@ -42,7 +42,7 @@ public class UserCommandService : IUserCommandService
      * <param name="command">The SignUpCommand to be handled, including username and password.</param>
      * <returns>A Task if successful, otherwise throws and exception.</returns>
      */
-    public async Task Handle(SignUpCommand command)
+    public async Task<User> Handle(SignUpCommand command)
     {
         if (_userRepository.ExistsByEmail(command.Email))
             throw new Exception($"Email {command.Email} is already taken");
@@ -52,16 +52,22 @@ public class UserCommandService : IUserCommandService
             command.FirstName, 
             command.LastName, 
             command.Email, 
-            hashedPassword, 
-            command.Username);
+            command.Username,
+            command.Phone,
+            command.Address,
+            command.PhotoUrl,
+            command.RoleId,
+            hashedPassword
+                );
         try
         {
             await _userRepository.AddAsync(user);
             await _unitOfWork.CompleteAsync();
+            return user;
         }
-        catch (Exception e)
+        catch (Exception ex)
         {
-            throw new Exception($"Error while creating user: {e.Message}");
+            throw new Exception($"Error while creating user: {ex.Message}");
         }
     }
     
@@ -106,6 +112,35 @@ public class UserCommandService : IUserCommandService
         try
         {
             _userRepository.Remove(user);
+            await _unitOfWork.CompleteAsync();
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(ex.Message);
+        }
+    }
+
+    /**
+     * Handle the UpdateUserCommand.
+     * <summary>
+     *    <para>
+     *       This method is responsible for handling the UpdateUserCommand.
+     *   </para>
+     * </summary>
+     * <param name="command">The UpdateUserCommand to be handled, including the Id of the user to be updated.</param>
+     * <returns>A Task if successful, otherwise throws and exception.</returns>
+     */
+    public async Task Handle(UpdateUserCommand command)
+    {
+        var user = await _userRepository.FindByIdAsync(command.Id);
+        if (user == null)
+            throw new NotFoundException();
+        try
+        {
+            user.UpdateName(command.FirstName, command.LastName);
+            user.UpdateEmail(command.Email);
+            user.UpdateUsername(command.Username);
+            _userRepository.Update(user);
             await _unitOfWork.CompleteAsync();
         }
         catch (Exception ex)
