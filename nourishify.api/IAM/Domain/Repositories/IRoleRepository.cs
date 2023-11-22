@@ -6,6 +6,6 @@ namespace nourishify.api.IAM.Domain.Repositories;
 public interface IRoleRepository : IBaseRepository<Role>
 {
     //Task<IEnumerable<Role>> ListAsync();
-    Task<Role?> FindByIdAsync(int roleId);
+    //Task<Role?> FindByIdAsync(long roleId);
     //Task AddAsync(Role role);
 }

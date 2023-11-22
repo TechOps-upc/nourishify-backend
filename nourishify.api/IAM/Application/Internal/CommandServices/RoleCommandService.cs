@@ -17,13 +17,14 @@ public class RoleCommandService : IRoleCommandService
         _roleRepository = roleRepository;
     }
     
-    public async Task Handle(CreateRoleCommand command)
+    public async Task<Role> Handle(CreateRoleCommand command)
     {
         var role = new Role(command.Name);
         try
         {
             await _roleRepository.AddAsync(role);
             await _unitOfWork.CompleteAsync();
+            return role;
         }
         catch (Exception ex)
         {

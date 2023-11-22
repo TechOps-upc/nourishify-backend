@@ -6,7 +6,7 @@ namespace nourishify.api.IAM.Domain.Model.Aggregates;
 
 public partial class User
 {
-    public User(string firstName, string lastName, string email, string username, string phone, string address, string photoUrl, int roleId, string passwordHash)
+    public User(string firstName, string lastName, string email, string username, string phone, string address, string photoUrl, long roleId, string passwordHash)
     {
         Name = new PersonName(firstName, lastName);
         Email = email;
@@ -39,9 +39,12 @@ public partial class User
     public string Phone { get; private set; }
     public string Address { get; private set; }
     public string PhotoUrl { get; private set; }
-    public int RoleId { get; private set; }
+    public long RoleId { get; private set; }
     
     // Expose properties
     public string FirstName => Name.FirstName;
     public string LastName => Name.LastName;
+    
+    //Relationship
+    public Role Role { get; set; }
 }

@@ -5,7 +5,7 @@ namespace nourishify.api.IAM.Interfaces.REST.Transform;
 
 public static class CreateRoleCommandFromResourceAssembler
 {
-    public static CreateRoleCommand ToCommandFromEntity(RoleResource role)
+    public static CreateRoleCommand ToCommandFromEntity(CreateRoleResource role)
     {
         return new CreateRoleCommand(role.Name);
     }

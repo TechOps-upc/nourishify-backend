@@ -22,20 +22,29 @@ public class RolesController : ControllerBase
     }
     
     [HttpPost]
-    public async Task<IActionResult> CreateRole([FromBody] RoleResource roleResource)
+    public async Task<IActionResult> CreateRole([FromBody] CreateRoleResource createRoleResource)
     {
-        var createRoleCommand = CreateRoleCommandFromResourceAssembler.ToCommandFromEntity(roleResource);
+        var createRoleCommand = CreateRoleCommandFromResourceAssembler.ToCommandFromEntity(createRoleResource);
         var createdRole = await _roleCommandService.Handle(createRoleCommand);
-        CreatedAtAction("GetRoleById", "Roles", new { id = createdRole.RoleId }, createdRole);
-        return Ok("Role created successfully");
+        CreatedAtAction(nameof(GetRoleById), new { id = createdRole.RoleId }, createdRole);
+        return Ok($"Role {createdRole.Name} created successfully");
     }
     
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetRoleById(int id)
+    public async Task<IActionResult> GetRoleById(long id)
     {
         var getRoleByIdQuery = new GetRoleByIdQuery(id);
         var role = await _roleQueryService.Handle(getRoleByIdQuery);
         var roleResource = RoleResourceFromEntityAssembler.ToResourceFromEntity(role!);
         return Ok(roleResource);
+    }
+    
+    [HttpGet]
+    public async Task<IActionResult> GetAllRoles()
+    {
+        var getAllRolesQuery = new GetAllRolesQuery();
+        var roles = await _roleQueryService.Handle(getAllRolesQuery);
+        var roleResources = roles.Select(RoleResourceFromEntityAssembler.ToResourceFromEntity);
+        return Ok(roleResources);
     }
 }

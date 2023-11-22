@@ -9,5 +9,5 @@ public record UpdateUserCommand(
     string Phone,
     string Address,
     string PhotoUrl,
-    int RoleId
+    long RoleId
     );

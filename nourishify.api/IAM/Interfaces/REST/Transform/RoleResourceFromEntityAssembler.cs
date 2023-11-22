@@ -7,6 +7,6 @@ public static class RoleResourceFromEntityAssembler
 {
     public static RoleResource ToResourceFromEntity(Role role)
     {
-        return new RoleResource(role.Name);
+        return new RoleResource(role.RoleId, role.Name);
     }
 }

@@ -8,6 +8,6 @@ public record SignUpCommand(
     string Phone,
     string Address,
     string PhotoUrl,
-    int RoleId,
+    long RoleId,
     string Password
     );
