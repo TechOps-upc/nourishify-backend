@@ -22,6 +22,7 @@ public class RolesController : ControllerBase
     }
     
     [HttpPost]
+    [AllowAnonymous]
     public async Task<IActionResult> CreateRole([FromBody] CreateRoleResource createRoleResource)
     {
         var createRoleCommand = CreateRoleCommandFromResourceAssembler.ToCommandFromEntity(createRoleResource);

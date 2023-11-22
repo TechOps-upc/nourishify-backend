@@ -72,6 +72,48 @@ public class UserCommandService : IUserCommandService
     }
     
     /**
+     * Handle the NutritionistSignUpCommand.
+     * <summary>
+     *     <para>
+     *         This method is responsible for handling the NutritionistSignUpCommand.
+     *     </para>
+     * </summary>
+     * <param name="command">The NutritionistSignUpCommand to be handled, including username and password.</param>
+     * <returns>A Task if successful, otherwise throws and exception.</returns>
+     */
+    public async Task<Nutritionist> Handle(NutritionistSignUpCommand command)
+    {
+        if (_userRepository.ExistsByEmail(command.Email))
+            throw new Exception($"Email {command.Email} is already taken");
+
+        var hashedPassword = _hashingService.HashPassword(command.Password);
+        var user = new Nutritionist(
+            command.FirstName, 
+            command.LastName, 
+            command.Email, 
+            command.Username,
+            command.Phone,
+            command.Address,
+            command.PhotoUrl,
+            command.RoleId,
+            hashedPassword,
+            command.ExperienceYears,
+            command.Age,
+            command.Education
+        );
+        try
+        {
+            await _userRepository.AddAsync(user);
+            await _unitOfWork.CompleteAsync();
+            return user;
+        }
+        catch (Exception ex)
+        {
+            throw new Exception($"Error while creating user: {ex.Message}");
+        }
+    }
+    
+    /**
      * Handle the LogInCommand.
      * <summary>
      *     <para>

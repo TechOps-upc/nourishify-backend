@@ -18,6 +18,15 @@ public interface IUserCommandService
   * @return A Task that represents the asynchronous operation.
   */
  Task<User> Handle(SignUpCommand command);
+ 
+ /**
+  * This method is used to handle the NutritionistSignUpCommand.
+  * The NutritionistSignUpCommand is used to create a new Nutritionist.
+  *
+  * @param command The NutritionistSignUpCommand that is sent to the UserCommandService.
+  * @return A Task that represents the asynchronous operation.
+  */
+ Task<Nutritionist> Handle(NutritionistSignUpCommand command);
 
  /**
   * This method is used to handle the SignInCommand.

@@ -1,6 +1,6 @@
 namespace nourishify.api.IAM.Domain.Model.Commands;
 
-public record SignUpCommand(
+public record NutritionistSignUpCommand(
     string FirstName,
     string LastName,
     string Email,
@@ -9,5 +9,8 @@ public record SignUpCommand(
     string Address,
     string PhotoUrl,
     long RoleId,
-    string Password
-);
+    string Password,
+    int ExperienceYears,
+    int Age,
+    List<string> Education
+    );
