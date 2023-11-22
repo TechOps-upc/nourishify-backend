@@ -17,7 +17,7 @@ public partial class Plan
     }
     
     public long Id { get; set; }
-    public string Name { get; set; } 
-    public float Price { get; set; }
-    public List<string> Perks { get; set; }
+    public string Name { get; private set; } 
+    public float Price { get; private set; }
+    public List<string> Perks { get; private set; }
 }

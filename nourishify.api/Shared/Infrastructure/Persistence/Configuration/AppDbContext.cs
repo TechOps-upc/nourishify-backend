@@ -33,6 +33,17 @@ public class AppDbContext : DbContext
     {
         base.OnModelCreating(builder);
         
+        // Subscription Plans Context
+        // Plans
+        builder.Entity<Plan>().ToTable("Plans");
+        builder.Entity<Plan>().HasKey(p => p.Id);
+        builder.Entity<Plan>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
+        builder.Entity<Plan>().Property(p => p.Name).IsRequired().HasMaxLength(50);
+        builder.Entity<Plan>().Property(p => p.Price).IsRequired();
+        builder.Entity<Plan>()
+            .Property(p => p.Perks)
+            .HasConversion(new StringListConverter());
+        
         // IAM Context
         // Users
         builder.Entity<User>().ToTable("Users");
@@ -76,17 +87,6 @@ public class AppDbContext : DbContext
             .WithOne(u => u.Role)
             .HasForeignKey(u => u.RoleId);
         
-        
-        // Subscription Plans Context
-        // Plans
-        builder.Entity<Plan>().ToTable("Plans");
-        builder.Entity<Plan>().HasKey(p => p.Id);
-        builder.Entity<Plan>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
-        builder.Entity<Plan>().Property(p => p.Name).IsRequired().HasMaxLength(50);
-        builder.Entity<Plan>().Property(p => p.Price).IsRequired();
-        builder.Entity<Plan>()
-            .Property(p => p.Perks)
-            .HasConversion(new StringListConverter());
         
         // Apply snake case naming convention
         builder.UseSnakeCaseNamingConvention();
