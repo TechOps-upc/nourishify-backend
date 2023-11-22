@@ -12,6 +12,11 @@ public static class UserResourceFromEntityAssembler
             user.FirstName,
             user.LastName,
             user.Email,
-            user.Username);
+            user.Username,
+            user.Phone,
+            user.Address,
+            user.PhotoUrl,
+            user.RoleId
+            );
     }
 }

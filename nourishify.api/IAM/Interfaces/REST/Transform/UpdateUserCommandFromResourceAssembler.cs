@@ -13,7 +13,11 @@ public static class UpdateUserCommandFromResourceAssembler
             resource.FirstName,
             resource.LastName,
             resource.Email,
-            resource.Username
+            resource.Username,
+            resource.Phone,
+            resource.Address,
+            resource.PhotoUrl,
+            resource.RoleId
         );
     }
 }

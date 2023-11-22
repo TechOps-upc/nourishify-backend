@@ -11,8 +11,12 @@ public static class SignUpCommandFromResourceAssembler
             resource.FirstName,
             resource.LastName,
             resource.Email,
-            resource.Password,
-            resource.Username
+            resource.Username,
+            resource.Phone,
+            resource.Address,
+            resource.PhotoUrl,
+            resource.RoleId,
+            resource.Password
             );
     }
 }

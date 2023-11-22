@@ -52,17 +52,22 @@ public class UserCommandService : IUserCommandService
             command.FirstName, 
             command.LastName, 
             command.Email, 
-            hashedPassword, 
-            command.Username);
+            command.Username,
+            command.Phone,
+            command.Address,
+            command.PhotoUrl,
+            command.RoleId,
+            hashedPassword
+                );
         try
         {
             await _userRepository.AddAsync(user);
             await _unitOfWork.CompleteAsync();
             return user;
         }
-        catch (Exception e)
+        catch (Exception ex)
         {
-            throw new Exception($"Error while creating user: {e.Message}");
+            throw new Exception($"Error while creating user: {ex.Message}");
         }
     }
     

@@ -44,6 +44,10 @@ public class AppDbContext : DbContext
         });
         builder.Entity<User>().Property(u => u.Email).IsRequired().HasMaxLength(50);
         builder.Entity<User>().Property(u => u.Username).IsRequired().HasMaxLength(50);
+        builder.Entity<User>().Property(u => u.Phone).IsRequired().HasMaxLength(20);
+        builder.Entity<User>().Property(u => u.Address).IsRequired().HasMaxLength(100);
+        builder.Entity<User>().Property(u => u.PhotoUrl).HasMaxLength(100);
+        builder.Entity<User>().Property(u => u.RoleId).IsRequired();
         builder.Entity<User>().Property(u => u.PasswordHash).IsRequired().HasMaxLength(100);
         
        

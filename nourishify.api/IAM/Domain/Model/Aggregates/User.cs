@@ -6,20 +6,28 @@ namespace nourishify.api.IAM.Domain.Model.Aggregates;
 
 public partial class User
 {
-    public User(string firstName, string lastName, string email, string passwordHash, string username)
+    public User(string firstName, string lastName, string email, string username, string phone, string address, string photoUrl, int roleId, string passwordHash)
     {
         Name = new PersonName(firstName, lastName);
         Email = email;
-        PasswordHash = passwordHash;
         Username = username;
+        Phone = phone;
+        Address = address;
+        PhotoUrl = photoUrl;
+        RoleId = roleId;
+        PasswordHash = passwordHash;
     }
 
     public User()
     {
         Name = new PersonName();
         Email = string.Empty;
-        PasswordHash = string.Empty;
         Username = string.Empty;
+        Phone = string.Empty;
+        Address = string.Empty;
+        PhotoUrl = string.Empty;
+        RoleId = 0;
+        PasswordHash = string.Empty;
     }
     
     public long Id { get; set; }
@@ -28,61 +36,12 @@ public partial class User
     public string Email { get; private set; }
     [JsonIgnore] public string PasswordHash { get; private set; }
     public string Username { get; private set; }
+    public string Phone { get; private set; }
+    public string Address { get; private set; }
+    public string PhotoUrl { get; private set; }
+    public int RoleId { get; private set; }
     
     // Expose properties
     public string FirstName => Name.FirstName;
     public string LastName => Name.LastName;
-    
-    /**
-     * <summary>
-     *     Updates the username of the user.
-     * </summary>
-     * <param name="username">The new username.</param>
-     * <returns>The updated user.</returns>
-     */
-    public User UpdateUsername(string username)
-    {
-        Username = username;
-        return this;
-    }
-    
-    /**
-     * <summary>
-     *     Updates the password hash of the user.
-     * </summary>
-     * <param name="passwordHash">The new password hash.</param>
-     * <returns>The updated user.</returns>
-     */
-    public User UpdatePasswordHash(string passwordHash)
-    {
-        PasswordHash = passwordHash;
-        return this;
-    }
-    
-    /**
-     * <summary>
-     *    Updates the name of the user.
-     * </summary>
-     * <param name="firstName">The new first name.</param>
-     * <param name="lastName">The new last name.</param>
-     * <returns>The updated user.</returns>
-     */
-    public User UpdateName(string firstName, string lastName)
-    {
-        Name = new PersonName(firstName, lastName);
-        return this;
-    }
-    
-    /**
-     * <summary>
-     *    Updates the email of the user.
-     * </summary>
-     * <param name="email">The new email.</param>
-     * <returns>The updated user.</returns>
-     */
-    public User UpdateEmail(string email)
-    {
-        Email = email;
-        return this;
-    }
 }

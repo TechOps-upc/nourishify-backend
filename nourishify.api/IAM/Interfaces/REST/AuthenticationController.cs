@@ -37,7 +37,8 @@ public class AuthenticationController : ControllerBase
     {
         var signUpCommand = SignUpCommandFromResourceAssembler.ToCommandFromResource(signUpResource);
         var createdUser = await _userCommandService.Handle(signUpCommand);
-        return CreatedAtAction("GetUserById", "Users", new { id = createdUser.Id }, createdUser);
+        CreatedAtAction("GetUserById", "Users", new { id = createdUser.Id }, createdUser);
+        return Ok("User created successfully");
     }
     
     /**
