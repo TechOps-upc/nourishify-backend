@@ -1,6 +1,7 @@
 using EntityFrameworkCore.CreatedUpdatedDate.Extensions;
 using Microsoft.EntityFrameworkCore;
 using nourishify.api.IAM.Domain.Model.Aggregates;
+using nourishify.api.Shared.Converters;
 using nourishify.api.Shared.Infrastructure.Persistence.Configuration.Extensions;
 
 namespace nourishify.api.Shared.Infrastructure.Persistence.Configuration;
@@ -50,6 +51,15 @@ public class AppDbContext : DbContext
         builder.Entity<User>().Property(u => u.PhotoUrl).HasMaxLength(100);
         builder.Entity<User>().Property(u => u.RoleId).IsRequired();
         builder.Entity<User>().Property(u => u.PasswordHash).IsRequired().HasMaxLength(100);
+        // Nutritionists
+        builder.Entity<Nutritionist>().ToTable("Nutritionists");
+        builder.Entity<Nutritionist>().HasBaseType<User>(); // Ensure base User properties are shared
+        builder.Entity<Nutritionist>().Property(n => n.YearsOfExperience);
+        builder.Entity<Nutritionist>().Property(n => n.Age);
+        // Apply the value converter to the Education property
+        builder.Entity<Nutritionist>()
+            .Property(n => n.Education)
+            .HasConversion(new StringListConverter());
         //Roles
         builder.Entity<Role>().ToTable("Roles");
         builder.Entity<Role>().HasKey(r => r.RoleId);

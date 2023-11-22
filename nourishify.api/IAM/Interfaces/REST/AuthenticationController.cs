@@ -31,7 +31,7 @@ public class AuthenticationController : ControllerBase
      * <param name="signUpResource">The sign up resource containing the username and password.</param>
      * <returns>A confirmation message if successful.</returns>
     */
-    [HttpPost("sign-up")]
+    [HttpPost("users/sign-up")]
     [AllowAnonymous]
     public async Task<IActionResult> SignUp([FromBody] SignUpResource signUpResource)
     {
@@ -39,6 +39,16 @@ public class AuthenticationController : ControllerBase
         var createdUser = await _userCommandService.Handle(signUpCommand);
         CreatedAtAction("GetUserById", "Users", new { id = createdUser.Id }, createdUser);
         return Ok("User created successfully");
+    }
+    
+    [HttpPost("nutritionists/sign-up")]
+    [AllowAnonymous]
+    public async Task<IActionResult> NutritionistSignUp([FromBody] NutritionistSignUpResource signUpResource)
+    {
+        var signUpCommand = NutritionistSignUpCommandFromResourceAssembler.ToCommandFromResource(signUpResource);
+        var createdUser = await _userCommandService.Handle(signUpCommand);
+        CreatedAtAction("GetUserById", "Users", new { id = createdUser.Id }, createdUser);
+        return Ok("Nutritionist user created successfully");
     }
     
     /**
